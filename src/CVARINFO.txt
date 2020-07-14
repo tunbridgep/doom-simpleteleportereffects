@@ -1,0 +1,7 @@
+server string teleporter_flats_red = "GATE1,GATE2,GATE3,GATE4RD";
+server string teleporter_flats_white = "GATE4";
+server string teleporter_flats_yellow = "GATE3TN,GATE4OR,GATE4YL";
+server string teleporter_flats_green = "GATE4GN";
+server string teleporter_flats_purple = "";
+server string teleporter_flats_blue = "GATE4BL";
+server string teleporter_flats_black = "";

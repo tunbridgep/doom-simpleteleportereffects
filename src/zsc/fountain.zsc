@@ -1,0 +1,9 @@
+//add gravity
+class GravityFountain : ParticleFountain
+{
+    Default
+    {
+        -NOBLOCKMAP;
+        -NOGRAVITY;
+    }
+}

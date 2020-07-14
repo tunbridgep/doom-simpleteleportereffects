@@ -1,0 +1,168 @@
+class TeleporterEffects : EventHandler
+{
+
+    Array<String> RedGateTextures;
+    Array<String> GreenGateTextures;
+    Array<String> BlueGateTextures;
+    Array<String> WhiteGateTextures;
+    Array<String> YellowGateTextures;
+    Array<String> BlackGateTextures;
+    Array<String> PurpleGateTextures;
+    /*
+    Array<String> Red1GateTextures;
+    Array<String> Blue1GateTextures;
+    Array<String> RBlue1GateTextures;
+    Array<String> RBlue2GateTextures;
+    Array<String> RBlue3GateTextures;
+    Array<String> RBlue4GateTextures;
+    Array<String> DRedGateTextures;
+    Array<String> Yellow1GateTextures;
+    Array<String> YorangeGateTextures;
+    Array<String> Purple1GateTextures;
+    Array<String> Green1GateTextures;
+    Array<String> Grey1GateTextures;
+    Array<String> Grey2GateTextures;
+    Array<String> Grey3GateTextures;
+    Array<String> Grey4GateTextures;
+    Array<String> Grey5GateTextures;
+    Array<String> Maroon1GateTextures;
+    Array<String> Maroon2GateTextures;
+    Array<String> OrangeGateTextures;
+    */
+    
+    const NO_FOUNTAIN = 0;
+    const TELEPORT_SPECIAL = 70;
+
+    //check if our GateTextures array contains the texture we are looking for
+    bool HasTexture(textureid texture, Array<String> textures)
+    {
+        let texture_name = TexMan.GetName(texture);
+        for (int i = 0;i < textures.size();i++)
+        {
+            if (texture_name == textures[i])
+                return true;
+        }
+        return false;
+    }
+    
+    //Get the fountain for our sector, based on it's texture
+    //This will return the health value that we need
+    int GetFountainColour(textureid texture)
+    {
+        if (HasTexture(texture,WhiteGateTextures)) return 7;
+        if (HasTexture(texture,BlackGateTextures)) return 6;
+        if (HasTexture(texture,BlueGateTextures)) return 3;
+        if (HasTexture(texture,YellowGateTextures)) return 4;
+        if (HasTexture(texture,GreenGateTextures)) return 2;
+        if (HasTexture(texture,RedGateTextures)) return 1;
+        if (HasTexture(texture,PurpleGateTextures)) return 5;
+        return NO_FOUNTAIN;
+        /*
+    
+        if (HasTexture(texture,WhiteGateTextures)) return 26;
+        if (HasTexture(texture,BlackGateTextures)) return 1;
+        if (HasTexture(texture,BlueGateTextures)) return 2;
+        if (HasTexture(texture,YellowGateTextures)) return 23;
+        if (HasTexture(texture,GreenGateTextures)) return 5;
+        if (HasTexture(texture,RedGateTextures)) return 21;
+        if (HasTexture(texture,PurpleGateTextures)) return 15;
+        if (HasTexture(texture,Blue1GateTextures)) return 3;
+        if (HasTexture(texture,DRedGateTextures)) return 4;
+        if (HasTexture(texture,Green1GateTextures)) return 6;
+        if (HasTexture(texture,Grey1GateTextures)) return 7;
+        if (HasTexture(texture,Grey2GateTextures)) return 8;
+        if (HasTexture(texture,Grey3GateTextures)) return 9;
+        if (HasTexture(texture,Grey4GateTextures)) return 10;
+        if (HasTexture(texture,Grey5GateTextures)) return 11;
+        if (HasTexture(texture,Maroon1GateTextures)) return 12;
+        if (HasTexture(texture,Maroon2GateTextures)) return 13;
+        if (HasTexture(texture,OrangeGateTextures)) return 14;
+        if (HasTexture(texture,Purple1GateTextures)) return 16;
+        if (HasTexture(texture,RBlue1GateTextures)) return 17;
+        if (HasTexture(texture,RBlue2GateTextures)) return 18;
+        if (HasTexture(texture,RBlue3GateTextures)) return 19;
+        if (HasTexture(texture,RBlue4GateTextures)) return 20;
+        if (HasTexture(texture,Red1GateTextures)) return 22;
+        if (HasTexture(texture,Yellow1GateTextures)) return 24;
+        if (HasTexture(texture,YorangeGateTextures)) return 25;
+        return 0;
+        */
+    }
+
+    override void OnRegister()
+    {
+        CVar.GetCVAR("teleporter_flats_purple").GetString().Split(PurpleGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_black").GetString().Split(BlackGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_green").GetString().Split(GreenGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_red").GetString().Split(RedGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_blue").GetString().Split(BlueGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_white").GetString().Split(WhiteGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_yellow").GetString().Split(YellowGateTextures, ",");
+
+        /*
+        CVar.GetCVAR("teleporter_flats_orange").GetString().Split(OrangeGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_yellow1").GetString().Split(Yellow1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_yorange").GetString().Split(YorangeGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_green1").GetString().Split(Green1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_grey1").GetString().Split(Grey1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_grey2").GetString().Split(Grey2GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_grey3").GetString().Split(Grey3GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_grey4").GetString().Split(Grey4GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_grey5").GetString().Split(Grey5GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_maroon1").GetString().Split(Maroon1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_maroon2").GetString().Split(Maroon2GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_blue1").GetString().Split(Blue1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_dred").GetString().Split(DRedGateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_purple1").GetString().Split(Purple1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_rblue1").GetString().Split(RBlue1GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_rblue2").GetString().Split(RBlue2GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_rblue3").GetString().Split(RBlue3GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_rblue4").GetString().Split(RBlue4GateTextures, ",");
+        CVar.GetCVAR("teleporter_flats_red1").GetString().Split(Red1GateTextures, ",");
+        */
+    }
+    
+    //Determine if any line in our sector has the Teleport special
+    bool HasTeleportSpecial(Sector s)
+    {
+        int lines = s.lines.size();
+        for (int j = 0;j < lines;j++)
+        {
+            int special = s.lines[j].Special;
+            if (special == TELEPORT_SPECIAL)
+                return true;
+        }
+        return false;
+    }
+
+    override void WorldLoaded(WorldEvent e)
+    {
+        if (e.IsReopen)
+            return;
+            
+        int sectors = level.sectors.size();
+        
+        for (int i = 0; i < sectors;i++)
+        {
+            Sector cursect = level.sectors[i];
+            let floortex = cursect.GetTexture(0);
+            let ceiltex = cursect.GetTexture(1);
+            
+            int fountainColour = GetFountainColour(floortex);
+            bool hasSpecial = HasTeleportSpecial(cursect);
+                      
+            //skip this sector if it doesn't have a valid teleporter texture
+            if (fountainColour == NO_FOUNTAIN || !hasSpecial)
+                continue;
+            
+            //spawn fountain at sectors midpoint
+            vector2 center = cursect.CenterSpot;
+            let fountain = Actor.Spawn("GravityFountain",(center.x,center.y,0));
+            
+            //Set the fountain health. This determines it's colour. See here for more info
+            //https://zdoom.org/wiki/Particles
+            Console.Printf("Health value: "..fountainColour);
+            fountain.Health = fountainColour;
+        }
+    }
+}
