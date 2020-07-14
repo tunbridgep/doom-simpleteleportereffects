@@ -2,7 +2,7 @@
 
 ## About ##
 
-This very simple mod is designed to add particle fountains to all valid teleporters in Doom and any pwads. It can be configured using the teleporter_flats_<color> console commands. Simply add flat names to these lists and they will be handled correctly.
+This very simple mod is designed to add particle fountains to all valid teleporters in Doom and any pwads. It can be configured using the teleporter_flats_*color* console commands. Simply add comma-separated flat names to these lists and they will be handled correctly.
 
 The mod detects teleporters by ensuring at least one linedef on the sector has the Teleport (70) Action Special. This means it should also work for other games like Strife, Hexen etc, however these games already have teleporter effects, so it doesn't really make sense to use them there.
 
