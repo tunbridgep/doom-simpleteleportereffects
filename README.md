@@ -16,3 +16,7 @@ If you wish to build it yourself you can do so using the following steps:
 2. [Zip the contents of the src directory as a pk3](https://zdoom.org/wiki/Using_ZIPs_as_WAD_replacement), then run in GZDoom using the -file parameter or using another method.
 
 Alternatively, for a much quicker build experience, a config file is included for use with my [doom_quickbuild](https://github.com/tunbridgep/doom_quickbuild) utility.
+
+## Screenshots
+
+![teleporter fountain effects](./screenshots/fountains.png "Different Fountains for different flats")
