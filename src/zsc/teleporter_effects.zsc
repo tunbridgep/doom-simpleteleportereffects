@@ -37,6 +37,22 @@ class TeleporterEffects : EventHandler
         if (HasTexture(texture,PurpleGateTextures)) return 5;
         return NO_FOUNTAIN;
     }
+    
+    override void WorldThingSpawned(WorldEvent e)
+    {   
+        if(e.Thing is "TeleportDest" && teleporter_use_dests)
+        {
+            let floor_texture = e.Thing.cursector.GetTexture(0);
+            int fountainColour = GetFountainColour(floor_texture);
+            let pos = e.Thing.pos;
+            
+            if (fountainColour != NO_FOUNTAIN)
+            {
+                let fountain = Actor.Spawn("GravityFountain",(pos.x,pos.y,0));
+                fountain.Health = fountainColour;
+            }
+        }
+    }
 
     override void OnRegister()
     {

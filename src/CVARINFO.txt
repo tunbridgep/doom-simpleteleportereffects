@@ -5,3 +5,4 @@ server string teleporter_flats_green = "GATE4GN";
 server string teleporter_flats_purple = "";
 server string teleporter_flats_blue = "GATE4BL";
 server string teleporter_flats_black = "";
+server bool teleporter_use_dests = false;
