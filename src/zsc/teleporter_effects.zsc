@@ -104,7 +104,6 @@ class TeleporterEffects : EventHandler
             
             //Set the fountain health. This determines it's colour. See here for more info
             //https://zdoom.org/wiki/Particles
-            Console.Printf("Health value: "..fountainColour);
             fountain.Health = fountainColour;
         }
     }
