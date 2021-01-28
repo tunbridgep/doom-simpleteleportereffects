@@ -1,6 +1,5 @@
 class TeleporterEffects : EventHandler
 {
-
     Array<String> RedGateTextures;
     Array<String> GreenGateTextures;
     Array<String> BlueGateTextures;
@@ -11,6 +10,11 @@ class TeleporterEffects : EventHandler
     
     const NO_FOUNTAIN = 0;
     const TELEPORT_SPECIAL = 70;
+    const EXIT_SPECIAL = 243;
+    const EXIT_SPECIAL_SECRET = 244;
+    
+    const WALK_ACTIVATION = 1;
+    const MONSTER_ACTIVATION = 4;
 
     //check if our GateTextures array contains the texture we are looking for
     bool HasTexture(textureid texture, Array<String> textures)
@@ -82,9 +86,20 @@ class TeleporterEffects : EventHandler
     {
         int lines = s.lines.size();
         for (int j = 0;j < lines;j++)
-        {
+        {      
+            //skip this line if it is not a "walkable" or "monster" activation (for things like teleport/exit switches)
+            bool walk = s.lines[j].Activation == WALK_ACTIVATION;
+            bool monster = s.lines[j].Activation == MONSTER_ACTIVATION;
+                      
+            if (monster && !teleporter_allow_monster)
+                continue;
+            if (!walk && !monster)
+                continue;
+            
             int special = s.lines[j].Special;
             if (special == TELEPORT_SPECIAL)
+                return true;
+            if (teleporter_allow_exits && (special == EXIT_SPECIAL || special == EXIT_SPECIAL_SECRET))
                 return true;
         }
         return false;

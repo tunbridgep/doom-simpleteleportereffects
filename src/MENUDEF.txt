@@ -10,6 +10,12 @@ OptionMenu "TeleportBase"
     StaticText "$TELEPORT_CEIL_DESC", 1
     StaticText "$TELEPORT_CEIL_DESC2", 1
     StaticText "$TELEPORT_CEIL_DESC3", 1
+    StaticText ""
+    Option "$TELEPORT_EXIT", "teleporter_allow_exits", YesNo
+    StaticText "$TELEPORT_EXIT_DESC", 1
+    StaticText ""
+    Option "$TELEPORT_MONSTER", "teleporter_allow_monster", YesNo
+    StaticText "$TELEPORT_MONSTER_DESC", 1
     
     //TextField "$TELEPORT_FLATS_BLACK", "teleporter_flats_black"
     //TextField "$TELEPORT_FLATS_BLUE", "teleporter_flats_blue"

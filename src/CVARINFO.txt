@@ -7,3 +7,5 @@ server string teleporter_flats_blue = "GATE4BL,FLAT22,FWATER1,FWATER2,FWATER3,FW
 server string teleporter_flats_black = "FLAT22GY";
 server bool teleporter_use_dests = false;
 server bool teleporter_match_ceiling = false;
+server bool teleporter_allow_exits = true;
+server bool teleporter_allow_monster = false;

@@ -12,6 +12,12 @@ TELEPORT_CEIL_DESC = "If set, teleporter particles will only be created when";
 TELEPORT_CEIL_DESC2 = "the teleporter ceiling texture matches the floor texture";
 TELEPORT_CEIL_DESC3 = "This may look better in some maps";
 
+TELEPORT_EXIT = "Allow Exits";
+TELEPORT_EXIT_DESC = "If set, teleporter particles will also appear for 'teleporters' that end the level";
+
+TELEPORT_MONSTER = "Allow Monster Teleports";
+TELEPORT_MONSTER_DESC = "If set, teleporter particles will also appear for monster-only teleporters";
+
 //Flat Settings
 TELEPORT_FLATS_BLACK = "Black Particles";
 TELEPORT_FLATS_BLUE = "Blue Particles";
