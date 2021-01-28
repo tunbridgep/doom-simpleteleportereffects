@@ -1,0 +1,26 @@
+[enu default]
+
+//General Settings
+TELEPORT_SETTINGS = "Simple Teleporter Effects Settings";
+TELEPORT_FLAT_SETTINGS = "Flat settings";
+TELEPORT_DEST = "Create Particles at Destinations";
+TELEPORT_DEST_DESC = "Create particles at destination teleporters containing a valid texture,";
+TELEPORT_DEST_DESC2 = "even if it's not a teleporter itself (for one-way teleporters)";
+
+TELEPORT_CEIL = "Check Ceiling Texture";
+TELEPORT_CEIL_DESC = "If set, teleporter particles will only be created when";
+TELEPORT_CEIL_DESC2 = "the teleporter ceiling texture matches the floor texture";
+TELEPORT_CEIL_DESC3 = "This may look better in some maps";
+
+//Flat Settings
+TELEPORT_FLATS_BLACK = "Black Particles";
+TELEPORT_FLATS_BLUE = "Blue Particles";
+TELEPORT_FLATS_GREEN = "Green Particles";
+TELEPORT_FLATS_PURPLE = "Purple Particles";
+TELEPORT_FLATS_RED = "Red Particles";
+TELEPORT_FLATS_WHITE = "White Particles";
+TELEPORT_FLATS_YELLOW = "Yellow Particles";
+
+TELEPORT_FLATS_DESC_1 = "Floors matching these textures, with a valid teleport line,";
+TELEPORT_FLATS_DESC_2 = "will create particles of the specified color.";
+TELEPORT_FLATS_DESC_3 = "Floor names should be comma separated and are case-insensitive";

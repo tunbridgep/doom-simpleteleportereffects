@@ -1,0 +1,32 @@
+OptionMenu "TeleportBase"
+{
+    Title "$TELEPORT_SETTINGS"
+    //SubMenu "$TELEPORT_FLAT_SETTINGS", "TeleportFlatSettings"
+    Option "$TELEPORT_DEST", "teleporter_use_dests", YesNo
+    StaticText "$TELEPORT_DEST_DESC", 1
+    StaticText "$TELEPORT_DEST_DESC2", 1
+    StaticText ""
+    Option "$TELEPORT_CEIL", "teleporter_match_ceiling", YesNo
+    StaticText "$TELEPORT_CEIL_DESC", 1
+    StaticText "$TELEPORT_CEIL_DESC2", 1
+    StaticText "$TELEPORT_CEIL_DESC3", 1
+    
+    //TextField "$TELEPORT_FLATS_BLACK", "teleporter_flats_black"
+    //TextField "$TELEPORT_FLATS_BLUE", "teleporter_flats_blue"
+    //TextField "$TELEPORT_FLATS_GREEN", "teleporter_flats_green"
+    //TextField "$TELEPORT_FLATS_PURPLE", "teleporter_flats_purple"
+    //TextField "$TELEPORT_FLATS_RED", "teleporter_flats_red"
+    //TextField "$TELEPORT_FLATS_WHITE", "teleporter_flats_white"
+    //TextField "$TELEPORT_FLATS_YELLOW", "teleporter_flats_yellow"
+    //StaticText ""
+    //StaticText "$TELEPORT_FLATS_DESC_1", 1
+    //StaticText "$TELEPORT_FLATS_DESC_2", 1
+    //StaticText ""
+    //StaticText "$TELEPORT_FLATS_DESC_3", 1
+}
+
+AddOptionMenu "OptionsMenu"
+{
+    StaticText ""
+    Submenu "$TELEPORT_SETTINGS", "TeleportBase"
+} 

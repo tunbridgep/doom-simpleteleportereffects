@@ -15,9 +15,9 @@ class TeleporterEffects : EventHandler
     //check if our GateTextures array contains the texture we are looking for
     bool HasTexture(textureid texture, Array<String> textures)
     {
-        let texture_name = TexMan.GetName(texture);
+        let texture_name = TexMan.GetName(texture).MakeLower();
         for (int i = 0;i < textures.size();i++)
-        {
+        {       
             if (texture_name == textures[i])
                 return true;
         }
@@ -53,16 +53,28 @@ class TeleporterEffects : EventHandler
             }
         }
     }
+    
+    String sanitise_cvars(String cvar)
+    {
+        String re = cvar; //make a copy because the below functions work in-place
+        
+        //sanitise the input texture cvars in case the user fucks it up
+        re.Replace(" ", ""); //remove spaces
+        re.Replace(",,", ","); //remove extra commas
+        re = re.MakeLower(); //make lowercase so string names don't matter
+        
+        return re;
+    }
 
     override void OnRegister()
     {
-        CVar.GetCVAR("teleporter_flats_purple").GetString().Split(PurpleGateTextures, ",");
-        CVar.GetCVAR("teleporter_flats_black").GetString().Split(BlackGateTextures, ",");
-        CVar.GetCVAR("teleporter_flats_green").GetString().Split(GreenGateTextures, ",");
-        CVar.GetCVAR("teleporter_flats_red").GetString().Split(RedGateTextures, ",");
-        CVar.GetCVAR("teleporter_flats_blue").GetString().Split(BlueGateTextures, ",");
-        CVar.GetCVAR("teleporter_flats_white").GetString().Split(WhiteGateTextures, ",");
-        CVar.GetCVAR("teleporter_flats_yellow").GetString().Split(YellowGateTextures, ",");
+        sanitise_cvars(teleporter_flats_purple).Split(PurpleGateTextures, ",");
+        sanitise_cvars(teleporter_flats_black).Split(BlackGateTextures, ",");
+        sanitise_cvars(teleporter_flats_green).Split(GreenGateTextures, ",");
+        sanitise_cvars(teleporter_flats_red).Split(RedGateTextures, ",");
+        sanitise_cvars(teleporter_flats_blue).Split(BlueGateTextures, ",");
+        sanitise_cvars(teleporter_flats_white).Split(WhiteGateTextures, ",");
+        sanitise_cvars(teleporter_flats_yellow).Split(YellowGateTextures, ",");
     }
     
     //Determine if any line in our sector has the Teleport special
@@ -96,6 +108,10 @@ class TeleporterEffects : EventHandler
                       
             //skip this sector if it doesn't have a valid teleporter texture
             if (fountainColour == NO_FOUNTAIN || !hasSpecial)
+                continue;
+                
+            //skip if ceil texture isn't the same and "full teleporter only" mode is not set
+            if (floortex != ceiltex && teleporter_match_ceiling)
                 continue;
             
             //spawn fountain at sectors midpoint

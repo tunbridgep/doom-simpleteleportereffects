@@ -1,8 +1,9 @@
-server string teleporter_flats_red = "GATE1,GATE2,GATE3,GATE4RD";
-server string teleporter_flats_white = "GATE4";
-server string teleporter_flats_yellow = "GATE3TN,GATE4OR,GATE4YL";
-server string teleporter_flats_green = "GATE4GN";
+server string teleporter_flats_red = "GATE1,GATE2,GATE3,GATE4RD,TLITE_5,BLOOD1,BLOOD2,BLOOD3,TELEP2_6,AVFLAT11,ROSA05,ADEL_J16,ADEL_F51,FLAT22RD";
+server string teleporter_flats_white = "GATE4,TLITE6_1,TLITE6_4,FLAT23";
+server string teleporter_flats_yellow = "GATE3TN,GATE4OR,GATE4YL,TLITE_6,LAVA1,LAVA2,LAVA3,LAVA4,SLIME01,SLIME02,SLIME03,SLIME04,SLIME05,SLIME06,SLIME07,SLIME08,ADEL_F84,FLAT22OR";
+server string teleporter_flats_green = "GATE4GN,NUKAGE1,NUKAGE2,NUKAGE3,TELEP2_4,TLITE6G,FLAT22GN";
 server string teleporter_flats_purple = "";
-server string teleporter_flats_blue = "GATE4BL";
-server string teleporter_flats_black = "";
+server string teleporter_flats_blue = "GATE4BL,FLAT22,FWATER1,FWATER2,FWATER3,FWATER4,TELEP2_5,TLITE6B,FLAT23";
+server string teleporter_flats_black = "FLAT22GY";
 server bool teleporter_use_dests = false;
+server bool teleporter_match_ceiling = false;
