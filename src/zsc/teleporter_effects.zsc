@@ -19,10 +19,11 @@ class TeleporterEffects : EventHandler
     //check if our GateTextures array contains the texture we are looking for
     bool HasTexture(textureid texture, Array<String> textures)
     {
-        let texture_name = TexMan.GetName(texture).MakeLower();
+        let texture_name = TexMan.GetName(texture).MakeLower();        
         for (int i = 0;i < textures.size();i++)
-        {       
-            if (texture_name == textures[i])
+        {
+            let texture_noglow = textures[i].."_noglow"; //compatibility with my Flashlight mod
+            if (texture_name == textures[i] || texture_name == texture_noglow)
                 return true;
         }
         return false;
@@ -120,7 +121,7 @@ class TeleporterEffects : EventHandler
             
             int fountainColour = GetFountainColour(floortex);
             bool hasSpecial = HasTeleportSpecial(cursect);
-                      
+
             //skip this sector if it doesn't have a valid teleporter texture
             if (fountainColour == NO_FOUNTAIN || !hasSpecial)
                 continue;
