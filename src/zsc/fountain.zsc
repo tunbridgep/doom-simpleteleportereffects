@@ -7,3 +7,178 @@ class GravityFountain : ParticleFountain
         -NOGRAVITY;
     }
 }
+
+//Do the actual heavy lifting
+class TeleporterEffect : Actor
+{
+    private Actor fountain;
+    private int timer;
+    const TIMER_MAX = 35 * 5; //update every 5 seconds
+    //const TIMER_MAX = 2100; //update once per minute
+    private int fountainColor;
+    private bool exit_only;
+    private bool monsters_only;
+    private bool is_dest;
+    //private int uses;
+    //const UNLIMITED_USES = -1;
+    
+    void SetDest(bool val)
+    {
+        is_dest = val;
+    }
+    
+    void SetMonster(bool val)
+    {
+        monsters_only = val;
+    }
+    
+    void SetExit(bool val)
+    {
+        exit_only = val;
+    }
+    
+    /*
+    void SetUses(int num)
+    {
+        uses = num;
+    }
+    */
+    
+    const NO_FOUNTAIN = 0;
+    Array<String> RedGateTextures;
+    Array<String> GreenGateTextures;
+    Array<String> BlueGateTextures;
+    Array<String> WhiteGateTextures;
+    Array<String> YellowGateTextures;
+    Array<String> BlackGateTextures;
+    Array<String> PurpleGateTextures;
+    
+    private void SpawnFountain()
+    {
+        DeleteFountain();
+        fountain = Actor.Spawn("GravityFountain",(pos.x,pos.y,0));
+        
+        //Set the fountain health. This determines it's colour. See here for more info
+        //https://zdoom.org/wiki/Particles
+        fountain.Health = fountainColor;
+    }
+    
+    private void DeleteFountain()
+    {
+        if (fountain != null)
+            fountain.Destroy();
+    }
+    
+    private bool Check()
+    {       
+        let floor = self.cursector.GetTexture(0);
+        let ceiling = self.cursector.GetTexture(1);
+        
+        if (floor != ceiling && teleporter_match_ceiling)
+            return false;
+        
+        if (fountainColor == NO_FOUNTAIN)
+            return false;
+        
+        if (is_dest && !teleporter_use_dests)
+            return false;
+        
+        if (exit_only && !teleporter_allow_exits)
+            return false;
+        
+        if (monsters_only && !teleporter_allow_monster)
+            return false;
+        
+        return true;
+    }
+       
+    private bool HasTexture(textureid texture, Array<String> textures)
+    {
+        let texture_name = TexMan.GetName(texture).MakeLower();
+        for (int i = 0;i < textures.size();i++)
+        {
+            let texture_noglow = textures[i].."_noglow"; //compatibility with my Flashlight mod
+            if (texture_name == textures[i] || texture_name == texture_noglow)
+                return true;
+        }
+        return false;
+    }
+    
+    private void RefreshTextures()
+    {
+        sanitise_cvar(teleporter_flats_purple).Split(PurpleGateTextures, ",");
+        sanitise_cvar(teleporter_flats_black).Split(BlackGateTextures, ",");
+        sanitise_cvar(teleporter_flats_green).Split(GreenGateTextures, ",");
+        sanitise_cvar(teleporter_flats_red).Split(RedGateTextures, ",");
+        sanitise_cvar(teleporter_flats_blue).Split(BlueGateTextures, ",");
+        sanitise_cvar(teleporter_flats_white).Split(WhiteGateTextures, ",");
+        sanitise_cvar(teleporter_flats_yellow).Split(YellowGateTextures, ",");
+        fountainColor = GetFountainColour(self.cursector.GetTexture(0));
+    }
+    
+    String sanitise_cvar(String cvar)
+    {
+        String re = cvar; //make a copy because the below functions work in-place
+        
+        //sanitise the input texture cvars in case the user fucks it up
+        re.Replace(" ", ""); //remove spaces
+        re.Replace(",,", ","); //remove extra commas
+        re = re.MakeLower(); //make lowercase so string names don't matter
+        
+        return re;
+    }
+    
+    //Get the fountain for our sector, based on it's texture
+    //This will return the health value that we need
+    private int GetFountainColour(textureid texture)
+    {
+        if (HasTexture(texture,WhiteGateTextures)) return 7;
+        if (HasTexture(texture,BlackGateTextures)) return 6;
+        if (HasTexture(texture,BlueGateTextures)) return 3;
+        if (HasTexture(texture,YellowGateTextures)) return 4;
+        if (HasTexture(texture,GreenGateTextures)) return 2;
+        if (HasTexture(texture,RedGateTextures)) return 1;
+        if (HasTexture(texture,PurpleGateTextures)) return 5;
+        return NO_FOUNTAIN;
+    }
+    
+    override void BeginPlay()
+    {
+        super.BeginPlay();
+        
+        //offset the timer so that not all teleporters update at the same time
+        timer = random(0, 100);
+        
+        RefreshTextures();
+        
+        DoChecks();
+    }
+    
+    private void DoChecks()
+    {
+        if (Check() && fountain == null)
+        {
+            SpawnFountain();
+        }
+        else if (!Check() && fountain != null)
+        {
+            DeleteFountain();
+        }
+    }
+    
+    //Whenever our timer completes, re-check to see
+    //if the fountain is still valid
+    override void Tick()
+    {
+        if (timer < TIMER_MAX)
+        {
+            timer++;
+        }
+        else
+        {
+            timer = 0;
+            RefreshTextures();
+            DoChecks();
+        }
+    }
+}

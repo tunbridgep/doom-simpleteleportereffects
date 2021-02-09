@@ -9,3 +9,4 @@ server bool teleporter_use_dests = false;
 server bool teleporter_match_ceiling = false;
 server bool teleporter_allow_exits = true;
 server bool teleporter_allow_monster = false;
+server bool teleporter_debug = false;
