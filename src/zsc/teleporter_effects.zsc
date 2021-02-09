@@ -27,18 +27,31 @@ class TeleporterEffects : EventHandler
         int sectors = level.sectors.size();
         
         for (int i = 0; i < sectors;i++)
-        {           
+        {
+            Sector sect = level.sectors[i];
+            vector2 center = sect.CenterSpot;
             bool walk = false;
             bool monster = false;
             bool exit = false;
             bool usable = false;
             //int repeatable = 0;
             
-            for (int j = 0; j < level.sectors[i].lines.size();j++)
+            Sector centerSector = level.PointInSector(center);
+            
+            //center point must be in the same sector, otherwise it's a weird multi-area sector
+            if (centersector == null || centerSector.Index() != sect.Index())
             {
-                int special = level.sectors[i].lines[j].Special;
-                int activation = level.sectors[i].lines[j].Activation;
-                //repeatable += level.sectors[i].lines[j].Flags & Line.ML_REPEAT_SPECIAL ? 1 : 0;
+                if (teleporter_debug)
+                    Console.Printf("Sector #"..sect.Index().."'s midpoint is outside of sector. Skipping...");
+                continue;
+            }
+            
+            
+            for (int j = 0; j < sect.lines.size();j++)
+            {
+                int special = sect.lines[j].Special;
+                int activation = sect.lines[j].Activation;
+                //repeatable += sect.lines[j].Flags & Line.ML_REPEAT_SPECIAL ? 1 : 0;
             
                 walk = walk || activation == WALK_ACTIVATION;
                 monster = monster || activation == MONSTER_ACTIVATION;
@@ -54,12 +67,11 @@ class TeleporterEffects : EventHandler
             
             if ((walk || monster) && (usable || exit))
             {
-                vector2 center = level.sectors[i].CenterSpot;
                 let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",(center.x,center.y,0)));
                 fountain.SetExit(exit);
                 fountain.SetMonster(monster);
                 if (teleporter_debug)
-                    Console.Printf("Spawning fountain at "..center.x..", "..center.y.." (exit: "..exit..", monster: "..monster..") in sector #"..level.sectors[i].Index());
+                    Console.Printf("Spawning fountain at "..center.x..", "..center.y.." (exit: "..exit..", monster: "..monster..") in sector #"..sect.Index());
             }
             
         }
