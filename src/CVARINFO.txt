@@ -1,10 +1,10 @@
-server string teleporter_flats_red = "GATE1,GATE2,GATE3,GATE4RD,TLITE_5,TELEP2_6,AVFLAT11,ROSA05,ADEL_J16,ADEL_F51,FLAT22RD,FLOOR1_6";
-server string teleporter_flats_white = "GATE4,TLITE6_1,TLITE6_4,FLAT23";
-server string teleporter_flats_yellow = "GATE3TN,GATE4OR,GATE4YL,TLITE_6,ADEL_F84,FLAT22OR";
-server string teleporter_flats_green = "GATE4GN,NUKAGE1,NUKAGE2,NUKAGE3,TELEP2_4,TLITE6G,FLAT22GN,GRN";
-server string teleporter_flats_purple = "";
-server string teleporter_flats_blue = "GATE4BL,FLAT22,TELEP2_5,TLITE6B,FLAT22";
-server string teleporter_flats_black = "FLAT22GY";
+nosave string teleporter_flats_red = "GATE1,GATE2,GATE3,GATE4RD,TLITE_5,TELEP2_6,AVFLAT11,ROSA05,ADEL_J16,ADEL_F51,FLAT22RD,FLOOR1_6,TLITEVRO,TLITEVR,TLITE61R";
+nosave string teleporter_flats_white = "GATE4,TLITE6_1,TLITE6_4,FLAT23,MTTKF06,TLITE65W";
+nosave string teleporter_flats_yellow = "GATE3TN,GATE4OR,GATE4YL,TLITE_6,ADEL_F84,FLAT22OR,TLITEVYO,TLITEVY,TLITE65O,TLITE65Y";
+nosave string teleporter_flats_green = "GATE4GN,TELEP2_4,TLITE6G,FLAT22GN,GRN,TLITEVG,TLITE65G,KS_LITEG";
+nosave string teleporter_flats_purple = "";
+nosave string teleporter_flats_blue = "GATE4BL,FLAT22,TELEP2_5,TLITE6B,FLAT22,TLITEVBO,TLITEVB,TLITE65B";
+nosave string teleporter_flats_black = "FLAT22GY";
 server bool teleporter_use_dests = false;
 server bool teleporter_match_ceiling = false;
 server bool teleporter_allow_exits = true;

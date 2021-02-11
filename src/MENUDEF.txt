@@ -33,6 +33,5 @@ OptionMenu "TeleportBase"
 
 AddOptionMenu "OptionsMenu"
 {
-    StaticText ""
     Submenu "$TELEPORT_SETTINGS", "TeleportBase"
 } 
