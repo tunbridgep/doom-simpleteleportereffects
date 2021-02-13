@@ -6,25 +6,45 @@ class TeleporterEffects : EventHandler
     
     const WALK_ACTIVATION = 1;
     const MONSTER_ACTIVATION = 4;
-   
+    
+    Actor SpawnFountain(Vector3 pos, bool player, bool exit, bool monster, bool dest)
+    {
+        let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",pos));
+        fountain.SetDest(dest);
+        fountain.SetPlayerStart(player);
+        fountain.SetExit(exit);
+        fountain.SetMonster(monster);
+        
+        if (teleporter_debug)
+            Console.Printf("Spawning fountain at "..pos.." (exit: "..exit..", monster: "..monster..", player: "..player..", dest: "..dest..")");
+        
+        return fountain;
+    }
+    
+    private bool IsTitlemap()
+    {
+        return gamestate == 7;
+    }
+    
+    override void PlayerEntered (PlayerEvent e)
+    {
+        if (!e.IsReturn && !IsTitlemap())
+        {
+            let player = players[e.PlayerNumber].mo;
+            SpawnFountain(player.pos, true, false, false, false);
+        }
+    }
+    
     override void WorldThingSpawned(WorldEvent e)
     {
         bool dest = e.Thing is "TeleportDest";
-        bool player = e.Thing is "PlayerPawn";
-        if(dest || player)
-        {
-            let pos = e.Thing.pos;
-            let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",(pos.x,pos.y,0)));
-            fountain.SetDest(dest);
-            fountain.SetPlayerStart(player);
-            if (teleporter_debug)
-                Console.Printf("Spawning fountain at "..pos.x..", "..pos.y.." (dest)");
-        }
+        if(dest && !IsTitlemap())
+            SpawnFountain(e.Thing.pos, false, false, false, true);
     }
 
     override void WorldLoaded(WorldEvent e)
     {   
-        if (e.IsReopen)
+        if (e.IsReopen || IsTitlemap())
             return;
             
         int sectors = level.sectors.size();
@@ -69,14 +89,7 @@ class TeleporterEffects : EventHandler
                 continue;
             
             if ((walk || monster) && (usable || exit))
-            {
-                let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",(center.x,center.y,0)));
-                fountain.SetExit(exit);
-                fountain.SetMonster(monster);
-                if (teleporter_debug)
-                    Console.Printf("Spawning fountain at "..center.x..", "..center.y.." (exit: "..exit..", monster: "..monster..") in sector #"..sect.Index());
-            }
-            
+                SpawnFountain((center.x, center.y, 0), false, exit, monster, false);
         }
     }
 }
