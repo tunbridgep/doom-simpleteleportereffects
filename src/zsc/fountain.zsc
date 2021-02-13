@@ -19,8 +19,14 @@ class TeleporterEffect : Actor
     private bool exit_only;
     private bool monsters_only;
     private bool is_dest;
+    private bool is_playerStart;
     //private int uses;
     //const UNLIMITED_USES = -1;
+    
+    void SetPlayerStart(bool val)
+    {
+        is_playerStart = val;
+    }
     
     void SetDest(bool val)
     {
@@ -81,6 +87,9 @@ class TeleporterEffect : Actor
             return false;
         
         if (is_dest && !teleporter_use_dests)
+            return false;
+        
+        if (is_playerStart && !teleporter_allow_starts)
             return false;
         
         if (exit_only && !teleporter_allow_exits)

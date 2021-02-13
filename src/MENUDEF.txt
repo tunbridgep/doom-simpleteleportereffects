@@ -13,6 +13,8 @@ OptionMenu "TeleportBase"
     StaticText ""
     Option "$TELEPORT_EXIT", "teleporter_allow_exits", YesNo
     StaticText "$TELEPORT_EXIT_DESC", 1
+    Option "$TELEPORT_START", "teleporter_allow_starts", YesNo
+    StaticText "$TELEPORT_START_DESC", 1
     StaticText ""
     Option "$TELEPORT_MONSTER", "teleporter_allow_monster", YesNo
     StaticText "$TELEPORT_MONSTER_DESC", 1

@@ -8,12 +8,15 @@ class TeleporterEffects : EventHandler
     const MONSTER_ACTIVATION = 4;
    
     override void WorldThingSpawned(WorldEvent e)
-    {   
-        if(e.Thing is "TeleportDest")
+    {
+        bool dest = e.Thing is "TeleportDest";
+        bool player = e.Thing is "PlayerPawn";
+        if(dest || player)
         {
             let pos = e.Thing.pos;
             let fountain = TeleporterEffect(Actor.Spawn("TeleporterEffect",(pos.x,pos.y,0)));
-            fountain.SetDest(true);
+            fountain.SetDest(dest);
+            fountain.SetPlayerStart(player);
             if (teleporter_debug)
                 Console.Printf("Spawning fountain at "..pos.x..", "..pos.y.." (dest)");
         }

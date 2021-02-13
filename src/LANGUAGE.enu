@@ -15,6 +15,9 @@ TELEPORT_CEIL_DESC3 = "This may look better in some maps";
 TELEPORT_EXIT = "Allow Exits";
 TELEPORT_EXIT_DESC = "If set, teleporter particles will also appear for 'teleporters' that end the level";
 
+TELEPORT_START = "Allow Starts";
+TELEPORT_START_DESC = "If set, teleporter particles will also appear for 'teleporters' that players start on";
+
 TELEPORT_MONSTER = "Allow Monster Teleports";
 TELEPORT_MONSTER_DESC = "If set, teleporter particles will also appear for monster-only teleporters";
 
