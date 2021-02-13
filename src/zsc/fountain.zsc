@@ -3,14 +3,22 @@ class GravityFountain : ParticleFountain
 {
     Default
     {
-        -NOBLOCKMAP;
-        -NOGRAVITY;
+        +NOBLOCKMAP;
+        +NOTONAUTOMAP;
+        +MOVEWITHSECTOR;
     }
 }
 
 //Do the actual heavy lifting
 class TeleporterEffect : Actor
 {
+    Default
+    {
+        +NOGRAVITY;
+        +NOTONAUTOMAP;
+        +MOVEWITHSECTOR;
+    }
+    
     private Actor fountain;
     private int timer;
     const TIMER_MAX = 35 * 5; //update every 5 seconds
