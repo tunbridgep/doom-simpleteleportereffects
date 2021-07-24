@@ -3,9 +3,10 @@ class GravityFountain : ParticleFountain
 {
     Default
     {
-        +NOBLOCKMAP;
+        +NOCLIP;
         +NOTONAUTOMAP;
         +MOVEWITHSECTOR;
+        +RELATIVETOFLOOR;
     }
 }
 
@@ -14,9 +15,10 @@ class TeleporterEffect : Actor
 {
     Default
     {
-        +NOGRAVITY;
+        +NOCLIP;
         +NOTONAUTOMAP;
         +MOVEWITHSECTOR;
+        +RELATIVETOFLOOR;
     }
     
     private Actor fountain;
@@ -121,6 +123,13 @@ class TeleporterEffect : Actor
         return false;
     }
     
+    private void MoveToFloor()
+    {
+        SetOrigin((pos.x, pos.y, self.floorz),false);
+        if (fountain)
+            fountain.SetOrigin(pos,false);
+    }
+    
     private void RefreshTextures()
     {
         sanitise_cvar(teleporter_flats_purple).Split(PurpleGateTextures, ",");
@@ -197,5 +206,6 @@ class TeleporterEffect : Actor
             RefreshTextures();
             DoChecks();
         }
+        MoveToFloor();
     }
 }

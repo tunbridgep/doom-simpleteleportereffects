@@ -6,6 +6,7 @@ class TeleporterEffects : EventHandler
     
     const WALK_ACTIVATION = 1;
     const MONSTER_ACTIVATION = 4;
+    const ML_BLOCKING = 0x00000001;
     
     Actor SpawnFountain(Vector3 pos, bool player, bool exit, bool monster, bool dest)
     {
@@ -57,7 +58,9 @@ class TeleporterEffects : EventHandler
             bool monster = false;
             bool exit = false;
             bool usable = false;
-            //int repeatable = 0;
+            int repeatable = 0;
+            int back_sides = 0;
+            int front_sides = 0;
             
             Sector centerSector = level.PointInSector(center);
             
@@ -74,19 +77,30 @@ class TeleporterEffects : EventHandler
             {
                 int special = sect.lines[j].Special;
                 int activation = sect.lines[j].Activation;
-                //repeatable += sect.lines[j].Flags & Line.ML_REPEAT_SPECIAL ? 1 : 0;
+                repeatable += sect.lines[j].Flags & Line.ML_REPEAT_SPECIAL ? 1 : 0;
+                bool blocking = sect.lines[j].Flags & Line.ML_BLOCKING;
             
                 walk = walk || activation == WALK_ACTIVATION;
                 monster = monster || activation == MONSTER_ACTIVATION;
                 exit = exit || special == EXIT_SPECIAL || special == EXIT_SPECIAL_SECRET;
                 usable = usable || special == TELEPORT_SPECIAL;
                 
-                //Console.Printf("Repeatable: "..repeatable);
+                if (sect.lines[j].frontsector == sect && !blocking)
+                    front_sides++;
+                else if (sect.lines[j].backsector == sect && !blocking)
+                    back_sides++;
             }
             
+            Console.Printf("Sector #"..sect.Index().." repeatable: "..repeatable);
+            Console.Printf("Sector #"..sect.sectornum.." has "..front_sides.." front sides and "..back_sides.." back sides");
+            
             //we are likely in a sector that contains teleporters, but isn't a teleporter itself
-            if ((monster && exit) || (walk && monster) || (usable && exit))
+            if (front_sides >0 && back_sides >0)
                 continue;
+            
+            //we are likely in a sector that contains teleporters, but isn't a teleporter itself
+            //if ((monster && exit) || (walk && monster) || (usable && exit))
+                //continue;
             
             if ((walk || monster) && (usable || exit))
                 SpawnFountain((center.x, center.y, 0), false, exit, monster, false);
